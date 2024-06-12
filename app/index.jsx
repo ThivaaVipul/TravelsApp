@@ -3,7 +3,7 @@ import {ScrollView, Text, View,Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {images} from '../constants';
 import CustomButton from '../components/customButton';
-import {Redirect,router} from 'expo-router';
+import {router} from 'expo-router';
 
 export default function App() {
   return (
@@ -27,7 +27,7 @@ export default function App() {
           
         <CustomButton
           title = "Countinue with Email"
-          handlePress = {() => router.push('/Sign-in')}
+          handlePress = {() => router.push('auth/Sign-in')}
           containerStyles = "w-full mt-7 " 
         />
         </View>

@@ -1,4 +1,4 @@
-// Import the functions you need from the SDKs you need
+// app/firebase.js
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -7,7 +7,6 @@ import {
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBiw0GAbw_NDIXAu-hytDkmcbkoXUYkPhw",
   authDomain: "moneytracker-fb975.firebaseapp.com",
@@ -19,8 +18,8 @@ const firebaseConfig = {
   measurementId: "G-PHTGTM410L",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 });

@@ -5,8 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/customButton';
-import { Link } from 'expo-router';
-import { auth } from '../firebase'; // Ensure the path is correct
+import { Link, useRouter  } from 'expo-router';
+import { auth } from '../firebase'; 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const SignUp = () => {
@@ -18,12 +18,13 @@ const SignUp = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const submit = async () => {
     setIsSubmitting(true);
     try {
       await createUserWithEmailAndPassword(auth, form.email, form.password);
-      // Optionally, update user profile with additional information like username and contact number
+      router.push('/tabs/home'); 
       console.log('User signed up successfully');
     } catch (error) {
       console.error('Error signing up:', error);
@@ -62,13 +63,13 @@ const SignUp = () => {
 
           <FormField
             title="Contactnumber"
-            value={form.password}
+            value={form.contactnumber}
             handleChangeText={(e) => setForm({ ...form, contactnumber: e })}
             otherStyles="mt-7"
           />
 
           <CustomButton
-            title="Sign-in"
+            title="Sign-up"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
@@ -76,7 +77,7 @@ const SignUp = () => {
 
           <View className="justify-center pt-5 flex-row gap-2">
             <Text className="text-lg text-gray-100 font-pregular">Have an account already?</Text>
-            <Link href="/Sign-in" className="text-lg font-psemibold text-secondary">Sign In</Link>
+            <Link href="auth/Sign-in" className="text-lg font-psemibold text-secondary">Sign In</Link>
           </View>
         </View>
       </ScrollView>

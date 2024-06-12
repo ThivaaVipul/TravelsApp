@@ -1,12 +1,12 @@
-// app/auth/Sign-in.jsx
+// app/(auth)/Sign-in.jsx
 import { View, Text, ScrollView, Image } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/customButton';
-import { Link } from 'expo-router';
-import { auth } from '../firebase'; // Ensure the path is correct
+import { Link, useRouter } from 'expo-router';
+import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const SignIn = () => {
@@ -16,13 +16,14 @@ const SignIn = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const submit = async () => {
     setIsSubmitting(true);
     try {
       await signInWithEmailAndPassword(auth, form.email, form.password);
-      // Navigate to home screen or another screen on successful sign-in
       console.log('User signed in successfully');
+      router.push('/tabs/home'); 
     } catch (error) {
       console.error('Error signing in:', error);
     }
@@ -60,7 +61,7 @@ const SignIn = () => {
 
           <View className="justify-center pt-5 flex-row gap-2">
             <Text className="text-lg text-black-100 font-pregular">Don't have an account?</Text>
-            <Link href="/Sign-up" className="text-lg font-psemibold text-secondary">Sign Up</Link>
+            <Link href="auth/Sign-up" className="text-lg font-psemibold text-secondary">Sign Up</Link>
           </View>
         </View>
       </ScrollView>
