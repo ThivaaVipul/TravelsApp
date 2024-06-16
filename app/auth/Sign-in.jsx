@@ -1,5 +1,4 @@
-// app/(auth)/Sign-in.jsx
-import { View, Text, ScrollView, Image } from 'react-native';
+import { View, Text, ScrollView, Image, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
@@ -23,8 +22,17 @@ const SignIn = () => {
     try {
       await signInWithEmailAndPassword(auth, form.email, form.password);
       console.log('User signed in successfully');
-      router.push('/tabs/home'); 
+      router.push('/tabs/home');
     } catch (error) {
+      let errorMessage = 'An error occurred. Please try again.';
+      if (error.code === 'auth/user-not-found') {
+        errorMessage = 'No user found with this email.';
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Incorrect password.';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'The email address is not valid.';
+      }
+      Alert.alert('Sign In Error', errorMessage);
       console.error('Error signing in:', error);
     }
     setIsSubmitting(false);
@@ -61,7 +69,7 @@ const SignIn = () => {
 
           <View className="justify-center pt-5 flex-row gap-2">
             <Text className="text-lg text-black-100 font-pregular">Don't have an account?</Text>
-            <Link href="auth/Sign-up" className="text-lg font-psemibold text-secondary">Sign Up</Link>
+            <Link href="/auth/Sign-up" className="text-lg font-psemibold text-secondary">Sign Up</Link>
           </View>
         </View>
       </ScrollView>

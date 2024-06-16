@@ -1,16 +1,26 @@
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { auth } from '../firebase'; 
+import { auth, db } from '../firebase'; 
 import { useRouter } from 'expo-router'; 
+import { doc, getDoc } from 'firebase/firestore';
 
 const Home = () => {
   const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
   const router = useRouter(); 
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user);
+        const docRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setUserData(docSnap.data());
+        } else {
+          console.log('No such document!');
+        }
       }
     });
 
@@ -20,17 +30,26 @@ const Home = () => {
   const handleLogout = async () => {
     try {
       await auth.signOut();
-      router.replace('auth/Sign-in'); 
+      router.replace('/auth/Sign-in'); 
     } catch (error) {
       console.error('Error signing out:', error);
+      Alert.alert('Error', 'Failed to sign out. Please try again.');
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>Welcome To HomeScreen 🤓</Text>
-      {user && <Text style={styles.emailText}>Your email: {user.email}</Text>}
-      <Button title="Logout" onPress={handleLogout} color="#FFA001" /> 
+      {userData && (
+        <View style={styles.userInfo}>
+          <Text style={styles.infoText}>Username: {userData.username}</Text>
+          <Text style={styles.infoText}>Email: {userData.email}</Text>
+          <Text style={styles.infoText}>Contact Number: {userData.contactnumber}</Text>
+        </View>
+      )}
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -49,11 +68,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  emailText: {
+  userInfo: {
+    marginBottom: 20,
+  },
+  infoText: {
     fontSize: 18,
     color: '#555', 
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  logoutButton: {
+    backgroundColor: '#010048',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  logoutButtonText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

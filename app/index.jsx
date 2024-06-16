@@ -20,7 +20,7 @@ export default function App() {
             <Text className = "text-3xl text-black font-bold text-center">Discover Endless Travel with {' '}
             <Text className = "text-secondary-200">Crown Travels</Text></Text>
 
-            <Text className = "text-sm font-pregular text-black-100 mt-7 text-center">Where cretivity meets inovation: embark on a 
+            <Text className = "text-sm font-pregular text-black-100 mt-7 text-center">Where creativity meets innovation: embark on a 
             journey of limitless exploration with Crown Travels</Text>
           </View>
 
