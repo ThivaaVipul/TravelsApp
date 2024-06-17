@@ -9,14 +9,12 @@ import { getFirestore } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBiw0GAbw_NDIXAu-hytDkmcbkoXUYkPhw",
-  authDomain: "moneytracker-fb975.firebaseapp.com",
-  databaseURL: "https://moneytracker-fb975-default-rtdb.firebaseio.com",
-  projectId: "moneytracker-fb975",
-  storageBucket: "moneytracker-fb975.appspot.com",
-  messagingSenderId: "682829495400",
-  appId: "1:682829495400:web:fb35afac7f0105ccc68fdd",
-  measurementId: "G-PHTGTM410L",
+  apiKey: "AIzaSyBw2DWRwHWo2V6H1pc80Py5y5g8YXhRkMM",
+  authDomain: "crown-travels.firebaseapp.com",
+  projectId: "crown-travels",
+  storageBucket: "crown-travels.appspot.com",
+  messagingSenderId: "88557951510",
+  appId: "1:88557951510:web:f2e7be8c427310f41f7337",
 };
 
 const app = initializeApp(firebaseConfig);
